@@ -38,7 +38,15 @@ const StockGrid = () => {
     },
     { field: 'price', headerName: 'Price', valueFormatter: (params: ValueFormatterParams<StockData>) => `$${params.value.toFixed(2)}` },
     { field: 'change', headerName: 'Change', valueFormatter: (params: ValueFormatterParams<StockData>) => `$${params.value.toFixed(2)}` },
-    { field: 'changePercent', headerName: 'Change %', valueFormatter: (params: ValueFormatterParams<StockData>) => `${params.value}%` },
+    {
+      field: 'changePercent',
+      headerName: 'Change %',
+      valueFormatter: (params: ValueFormatterParams<StockData>) => `${params.value}%`,
+      cellStyle: (params) => {
+        const value = parseFloat(params.value);
+        return value >= 0 ? { color: 'green' } : { color: 'red' };
+      }
+    },
     { field: 'volume', headerName: 'Volume', valueFormatter: (params: ValueFormatterParams<StockData>) => params.value.toLocaleString() },
     { field: 'lastUpdated', headerName: 'Last Updated', valueFormatter: (params: ValueFormatterParams<StockData>) => new Date(params.value).toLocaleTimeString() },
   ]);

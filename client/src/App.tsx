@@ -10,12 +10,11 @@ const App = () => {
         <div className="bg-white rounded-lg p-2 col-span-2 border border-gray-200">
           <StockGrid />
         </div>
-
         <div className="bg-white rounded-lg p-2 border border-gray-200">
-          <p className="text-gray-600">Panel 3</p>
+          <p className="text-gray-600">Panel 2</p>
         </div>
         <div className="bg-white rounded-lg p-2 border border-gray-200">
-          <p className="text-gray-600">Panel 4</p>
+          <p className="text-gray-600">Panel 3</p>
         </div>
       </main>
     </div>

@@ -8,9 +8,17 @@ interface SparkLineProps {
 const SparkLine = ({ data }: SparkLineProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [pathData, setPathData] = useState<string>('');
+  const [lineColor, setLineColor] = useState<string>('#2196F3');
 
   useEffect(() => {
     if (!data || data.length === 0 || !svgRef.current) return;
+
+    // Determine line color based on first and last values
+    if (data.length > 1) {
+      const firstValue = data[0];
+      const lastValue = data[data.length - 1];
+      setLineColor(lastValue >= firstValue ? '#4CAF50' : '#F44336');
+    }
 
     // Get SVG dimensions
     const width = svgRef.current.clientWidth;
@@ -47,7 +55,7 @@ const SparkLine = ({ data }: SparkLineProps) => {
       {pathData && (
         <path
           fill="none"
-          stroke="#2196F3"
+          stroke={lineColor}
           strokeWidth={2}
           d={pathData}
         />
