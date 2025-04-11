@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, GetRowIdParams, ValueFormatterParams, themeMaterial, GridApi } from 'ag-grid-community';
 import SparkLine from './SparkLine';
+import InfoButton from './InfoButton';
 
 const myTheme = themeMaterial.withParams({ accentColor: 'red' });
-
 
 interface StockData {
   symbol: string;
@@ -29,6 +29,12 @@ const StockGrid = () => {
   };
 
   const [columnDefs, setColumnDefs] = useState<ColDef<StockData>[]>([
+    {
+      headerName: 'Info',
+      cellRenderer: (params: { data: StockData }) => <InfoButton id={params.data.symbol} />,
+      field: 'symbol',
+      valueGetter: () => '',
+    },
     { field: 'symbol', headerName: 'Symbol', sort: 'asc' },
     { 
       field: 'historicPrice', 
