@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isOpenFin } from '@/utils/openfin';
+import { isOpenFin, broadcastAuthStatus } from '@/utils/openfin';
+
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
@@ -8,13 +9,18 @@ interface LayoutProps {
 
 const Layout = ({ title, children }: LayoutProps) => {
   const navigate = useNavigate();
+  const openFin = isOpenFin();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('ag-grid-demo-user');
+
+    if (openFin) {
+      // Broadcast logout status to all windows
+      await broadcastAuthStatus(false);
+    }
+
     navigate('/login');
   };
-
-  const openFin = isOpenFin();
 
   return (
     <div className="h-screen flex flex-col p-4">

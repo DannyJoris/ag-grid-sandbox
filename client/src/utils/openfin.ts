@@ -8,28 +8,6 @@ export const isOpenFin = (): boolean => {
   return typeof window.fin !== 'undefined';
 };
 
-export const resizeToFullScreen = async () => {
-  if (!isOpenFin()) {
-    console.warn('Not running in OpenFin environment');
-    return;
-  }
-
-  try {
-    const currentWindow = window.fin.Window.getCurrentSync();
-    const displayInfo = await window.fin.System.getMonitorInfo();
-    const primaryDisplay = displayInfo.primaryMonitor;
-    
-    await currentWindow.setBounds({
-      left: primaryDisplay.availableRect.left,
-      top: primaryDisplay.availableRect.top,
-      width: primaryDisplay.availableRect.right - primaryDisplay.availableRect.left,
-      height: primaryDisplay.availableRect.bottom - primaryDisplay.availableRect.top
-    });
-  } catch (error) {
-    console.error('Error resizing window:', error);
-  }
-};
-
 export const openNewWindow = async (windowName: string, url: string, position: 'left' | 'right') => {
   if (!isOpenFin()) {
     console.warn('Not running in OpenFin environment');
@@ -136,6 +114,59 @@ export const subscribeToInfoId = (callback: (id: string) => void) => {
     };
   } catch (error) {
     console.error('Error subscribing to info ID:', error);
+    return () => {}; // Return empty cleanup function
+  }
+};
+
+export const broadcastAuthStatus = async (isAuthenticated: boolean, user?: any) => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return;
+  }
+
+  try {
+    // Broadcast the authentication status to all applications
+    await window.fin.InterApplicationBus.publish('auth-channel', {
+      isAuthenticated,
+      user,
+      timestamp: new Date().toISOString()
+    });
+
+    console.log(`Broadcasted auth status: ${isAuthenticated}`);
+  } catch (error) {
+    console.error('Error broadcasting auth status:', error);
+  }
+};
+
+export const subscribeToAuthStatus = (callback: (isAuthenticated: boolean, user?: any) => void) => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return () => {}; // Return empty cleanup function
+  }
+
+  try {
+    // Subscribe to the channel
+    const subscription = window.fin.InterApplicationBus.subscribe(
+      { uuid: '*' }, // Listen to all applications
+      'auth-channel',
+      (message: any, uuid: string, name: string) => {
+        if (message && typeof message.isAuthenticated === 'boolean') {
+          callback(message.isAuthenticated, message.user);
+        }
+      }
+    );
+
+    // Return cleanup function
+    return () => {
+      try {
+        // Properly unsubscribe using the subscription object
+        window.fin.InterApplicationBus.unsubscribe(subscription);
+      } catch (error) {
+        console.error('Error unsubscribing from auth status:', error);
+      }
+    };
+  } catch (error) {
+    console.error('Error subscribing to auth status:', error);
     return () => {}; // Return empty cleanup function
   }
 };
