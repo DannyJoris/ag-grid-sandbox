@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resizeToFullScreen } from '../utils/openfin';
+import { resizeToFullScreen } from '@/utils/openfin';
 
-const Login: React.FC = () => {
+const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [fullScreen, setFullScreen] = useState(false);
   const [error, setError] = useState('');
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
     }
     void fullScreen();
   }, []);
-  console.log(fullScreen);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       {fullScreen && (

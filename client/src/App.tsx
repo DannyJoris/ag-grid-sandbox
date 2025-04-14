@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
-import MainLayout from './components/MainLayout';
 import ProtectedRoute from './components/ProtectedRoute';
+import GridPage from './components/pages/GridPage';
+import InfoPage from './components/pages/InfoPage';
 
 const App = () => {
   return (
@@ -10,7 +11,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={
           <ProtectedRoute>
-            <MainLayout />
+            <GridPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/info" element={
+          <ProtectedRoute>
+            <InfoPage />
           </ProtectedRoute>
         } />
       </Routes>
@@ -18,4 +24,4 @@ const App = () => {
   );
 };
 
-export default App; 
+export default App;
