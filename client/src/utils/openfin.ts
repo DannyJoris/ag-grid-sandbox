@@ -4,8 +4,8 @@ declare global {
   }
 }
 
-export const isOpenFin = () => {
-  return window.fin !== undefined;
+export const isOpenFin = (): boolean => {
+  return typeof window.fin !== 'undefined';
 };
 
 export const resizeToFullScreen = async () => {
@@ -28,4 +28,4 @@ export const resizeToFullScreen = async () => {
   } catch (error) {
     console.error('Error resizing window:', error);
   }
-}; 
+};

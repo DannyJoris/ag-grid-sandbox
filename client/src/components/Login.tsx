@@ -30,6 +30,7 @@ const Login = () => {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('An error occurred during login');
     }
   };
@@ -61,6 +62,7 @@ const Login = () => {
                 type="text"
                 className="w-full p-2 border rounded-md"
                 value={credentials.username}
+                name="ag-grid-demo-username"
                 onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
               />
             </div>
@@ -72,6 +74,7 @@ const Login = () => {
                 type="password"
                 className="w-full p-2 border rounded-md"
                 value={credentials.password}
+                name="ag-grid-demo-password"
                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
               />
             </div>

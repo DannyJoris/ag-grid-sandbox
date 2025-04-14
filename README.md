@@ -21,3 +21,9 @@ npm ci
 ```bash
 npm run dev
 ```
+
+3. Run inside OpenFin/Here
+```bash
+npm install -g openfin-cli
+openfin --launch --config app.json
+```
