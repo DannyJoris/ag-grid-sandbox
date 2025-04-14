@@ -30,7 +30,7 @@ export const resizeToFullScreen = async () => {
   }
 };
 
-export const openNewWindow = async (windowName: string) => {
+export const openNewWindow = async (windowName: string, url: string, position: 'left' | 'right') => {
   if (!isOpenFin()) {
     console.warn('Not running in OpenFin environment');
     return;
@@ -40,19 +40,37 @@ export const openNewWindow = async (windowName: string) => {
     // Get the current application UUID
     const appUuid = window.fin.me.uuid;
 
-    const options = {
+    // Get monitor info to calculate window size
+    const displayInfo = await window.fin.System.getMonitorInfo();
+    const primaryDisplay = displayInfo.primaryMonitor;
+    const availableWidth = primaryDisplay.availableRect.right - primaryDisplay.availableRect.left;
+    const availableHeight = primaryDisplay.availableRect.bottom - primaryDisplay.availableRect.top;
+
+    let defaultWidth = 0;
+    let defaultLeft = 0;
+    if (position === 'left') {
+      defaultWidth = availableWidth - 400;
+      defaultLeft = primaryDisplay.availableRect.left;
+    } else if (position === 'right') {
+      defaultWidth = 400;
+      defaultLeft = primaryDisplay.availableRect.right - 400;
+    }
+
+    const windowOptions = {
       name: windowName,
-      url: `http://localhost:5173/`,
-      defaultWidth: 800,
-      defaultHeight: 600,
-      maximized: true,
+      url,
+      defaultWidth,
+      defaultHeight: availableHeight,
+      defaultTop: primaryDisplay.availableRect.top,
+      defaultLeft,
+      maximized: false,
       autoShow: true,
       frame: false,
       uuid: appUuid
     };
 
     // Create the window
-    await window.fin.Window.create(options);
+    await window.fin.Window.create(windowOptions);
 
   } catch (error) {
     console.error('Error opening window:', error);

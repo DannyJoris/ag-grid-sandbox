@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isOpenFin, resizeToFullScreen, openNewWindow, closeCurrentWindow, hideCurrentWindow } from '@/utils/openfin';
+import { isOpenFin, resizeToFullScreen, openNewWindow, hideCurrentWindow } from '@/utils/openfin';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -26,7 +26,8 @@ const Login = () => {
       if (data.success) {
         localStorage.setItem('ag-grid-demo-user', JSON.stringify(data.user));
         if (isOpenFin()) {
-          await openNewWindow('grid-window');
+          await openNewWindow('grid-window', 'http://localhost:5173/', 'left');
+          await openNewWindow('info-window', 'http://localhost:5173/info', 'right');
           await hideCurrentWindow();
         } else {
           navigate('/');
