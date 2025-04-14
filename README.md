@@ -6,6 +6,7 @@ Features:
 - Faker.js for generating sample data
 - Real-time updates via WebSocket
 - Tailwind CSS for styling
+- OpenFin integration
 
 ## Project Structure
 - `client/` - React frontend with Vite
