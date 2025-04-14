@@ -39,9 +39,7 @@ export const openNewWindow = async (windowName: string) => {
   try {
     // Get the current application UUID
     const appUuid = window.fin.me.uuid;
-    console.log('App UUID:', appUuid);
 
-    // Create window options
     const options = {
       name: windowName,
       url: `http://localhost:5173/`,
@@ -49,18 +47,13 @@ export const openNewWindow = async (windowName: string) => {
       defaultHeight: 600,
       maximized: true,
       autoShow: true,
-      frame: true,
+      frame: false,
       uuid: appUuid
     };
 
-    console.log('Creating window with options:', options);
-    
-    // Create the window directly using the Window API
-    const finWindow = await window.fin.Window.create(options);
-    console.log('Created window:', finWindow);
+    // Create the window
+    await window.fin.Window.create(options);
 
-    // Resize to full screen
-    await resizeToFullScreen();
   } catch (error) {
     console.error('Error opening window:', error);
   }
@@ -74,7 +67,6 @@ export const hideCurrentWindow = async () => {
 
   try {
     const currentWindow = window.fin.Window.getCurrentSync();
-    console.log('Hiding window:', currentWindow);
     await currentWindow.hide();
   } catch (error) {
     console.error('Error hiding window:', error);
