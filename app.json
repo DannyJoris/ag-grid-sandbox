@@ -24,14 +24,22 @@
       "url": "http://localhost:5173/",
       "maximized": true,
       "defaultCentered": true,
-      "frame": true
+      "frame": true,
+      "cornerRounding": {
+        "width": 5,
+        "height": 5
+      }
     },
     {
       "name": "info-window",
       "url": "http://localhost:5173/info",
       "maximized": true,
       "defaultCentered": true,
-      "frame": true
+      "frame": true,
+      "cornerRounding": {
+        "width": 5,
+        "height": 5
+      }
     }
   ]
 }
