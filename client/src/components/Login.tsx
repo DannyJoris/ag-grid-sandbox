@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resizeToFullScreen } from '@/utils/openfin';
+import { isOpenFin, resizeToFullScreen, openNewWindow, closeCurrentWindow, hideCurrentWindow } from '@/utils/openfin';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -25,7 +25,12 @@ const Login = () => {
 
       if (data.success) {
         localStorage.setItem('ag-grid-demo-user', JSON.stringify(data.user));
-        navigate('/');
+        if (isOpenFin()) {
+          await openNewWindow('grid-window');
+          await hideCurrentWindow();
+        } else {
+          navigate('/');
+        }
       } else {
         setError(data.message || 'Login failed');
       }

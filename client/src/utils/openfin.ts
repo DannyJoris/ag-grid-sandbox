@@ -29,3 +29,54 @@ export const resizeToFullScreen = async () => {
     console.error('Error resizing window:', error);
   }
 };
+
+export const openNewWindow = async (windowName: string) => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return;
+  }
+
+  try {
+    // Get the current application UUID
+    const appUuid = window.fin.me.uuid;
+    console.log('App UUID:', appUuid);
+
+    // Create window options
+    const options = {
+      name: windowName,
+      url: `http://localhost:5173/`,
+      defaultWidth: 800,
+      defaultHeight: 600,
+      maximized: true,
+      autoShow: true,
+      frame: true,
+      uuid: appUuid
+    };
+
+    console.log('Creating window with options:', options);
+    
+    // Create the window directly using the Window API
+    const finWindow = await window.fin.Window.create(options);
+    console.log('Created window:', finWindow);
+
+    // Resize to full screen
+    await resizeToFullScreen();
+  } catch (error) {
+    console.error('Error opening window:', error);
+  }
+};
+
+export const hideCurrentWindow = async () => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return;
+  }
+
+  try {
+    const currentWindow = window.fin.Window.getCurrentSync();
+    console.log('Hiding window:', currentWindow);
+    await currentWindow.hide();
+  } catch (error) {
+    console.error('Error hiding window:', error);
+  }
+};

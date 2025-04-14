@@ -4,9 +4,8 @@
     "uuid": "login-window",
     "url": "http://localhost:5173/login",
     "autoShow": true,
-    "defaultWidth": 500,
-    "defaultHeight": 600,
     "defaultCentered": true,
+    "maximized": true,
     "frame": false,
     "cornerRounding": {
       "width": 5,
@@ -18,5 +17,18 @@
   },
   "runtimeAssets": {
     "version": "34.118.78"
-  }
+  },
+  "windows": [
+    {
+      "name": "grid-window",
+      "url": "http://localhost:5173/",
+      "maximized": true,
+      "defaultCentered": true,
+      "frame": true,
+      "cornerRounding": {
+        "width": 5,
+        "height": 5
+      }
+    }
+  ]
 }
