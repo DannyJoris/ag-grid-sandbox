@@ -1,6 +1,9 @@
+import { broadcastInfoId } from '@/utils/openfin';
+
 const InfoButton = ({ id }: { id: string }) => {
   const handleClick = () => {
     console.log(id);
+    broadcastInfoId(id);
   };
 
   return (

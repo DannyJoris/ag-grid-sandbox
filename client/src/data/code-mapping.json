@@ -1,0 +1,22 @@
+{
+  "AAPL": "Apple_Inc.",
+  "ADBE": "Adobe_Inc.",
+  "AMZN": "Amazon_(company)",
+  "BRK.A": "Berkshire_Hathaway",
+  "CRM": "Salesforce",
+  "DIS": "The_Walt_Disney_Company",
+  "GOOGL": "Alphabet_Inc.",
+  "INTC": "Intel",
+  "JPM": "JPMorgan_Chase",
+  "KO": "The_Coca-Cola_Company",
+  "MA": "Mastercard",
+  "META": "Meta_Platforms",
+  "MSFT": "Microsoft",
+  "NFLX": "Netflix",
+  "NVDA": "Nvidia",
+  "ORCL": "Oracle_Corporation",
+  "PEP": "PepsiCo",
+  "PG": "Procter_and_Gamble",
+  "V": "Visa_Inc.",
+  "WMT": "Walmart"
+}

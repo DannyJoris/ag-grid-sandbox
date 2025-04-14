@@ -90,3 +90,52 @@ export const hideCurrentWindow = async () => {
     console.error('Error hiding window:', error);
   }
 };
+
+export const broadcastInfoId = async (id: string) => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return;
+  }
+
+  try {
+    // Broadcast the ID to all applications
+    await window.fin.InterApplicationBus.publish('info-channel', { id });
+    
+    console.log(`Broadcasted info ID: ${id}`);
+  } catch (error) {
+    console.error('Error broadcasting info ID:', error);
+  }
+};
+
+export const subscribeToInfoId = (callback: (id: string) => void) => {
+  if (!isOpenFin()) {
+    console.warn('Not running in OpenFin environment');
+    return () => {}; // Return empty cleanup function
+  }
+
+  try {
+    // Subscribe to the channel
+    const subscription = window.fin.InterApplicationBus.subscribe(
+      { uuid: '*' }, // Listen to all applications
+      'info-channel',
+      (message: any, uuid: string, name: string) => {
+        if (message && message.id) {
+          callback(message.id);
+        }
+      }
+    );
+
+    // Return cleanup function
+    return () => {
+      try {
+        // Properly unsubscribe using the subscription object
+        window.fin.InterApplicationBus.unsubscribe(subscription);
+      } catch (error) {
+        console.error('Error unsubscribing from info ID:', error);
+      }
+    };
+  } catch (error) {
+    console.error('Error subscribing to info ID:', error);
+    return () => {}; // Return empty cleanup function
+  }
+};

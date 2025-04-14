@@ -11,7 +11,7 @@ export interface StockData {
 }
 
 // List of fake stock symbols
-const SYMBOLS = ['AAPL', 'ADBE', 'AMZN', 'BAC', 'CSCO', 'DIS', 'GOOGL', 'HD', 'INTC', 'JPM', 'KO', 'META', 'MSFT', 'NFLX', 'NVDA', 'PEP', 'PFE', 'PYPL', 'V', 'WMT'];
+const SYMBOLS = ['AAPL', 'ADBE', 'AMZN', 'BRK.A', 'CRM', 'DIS', 'GOOGL', 'INTC', 'JPM', 'KO', 'MA', 'META', 'MSFT', 'NFLX', 'NVDA', 'ORCL', 'PEP', 'PG', 'V', 'WMT'];
 
 // Generate a single stock record
 const generateStockRecord = (): Omit<StockData, 'symbol'> => {
